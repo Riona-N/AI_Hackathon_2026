@@ -2,6 +2,16 @@
 
 - Raw readings: 29997 rows -> pivoted to 861 site/date rows -> 829 rows with a usable target.
 
+- Classification procedure: Data preprocessing -> Data leakage checks -> Train/test split -> 10-fold cross-validation -> SMOTE on training data only -> Initial model training -> Overfitting/underfitting detection -> Correction and retraining -> Final test evaluation.
+
+- SMOTE classification final accuracy: 91.57%
+
+- SMOTE classification precision: 0.9177
+
+- SMOTE classification recall: 0.9131
+
+- SMOTE classification F1: 0.9152
+
 - 10-fold cross-validation.
 
 | Model             |       R2 |     RMSE |      MAE |

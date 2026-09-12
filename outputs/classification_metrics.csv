@@ -1,0 +1,2 @@
+cv_accuracy,cv_precision,cv_recall,cv_f1,initial_train_accuracy,initial_test_accuracy,corrected_train_accuracy,final_test_accuracy,final_test_precision,final_test_recall,final_test_f1,fit_status,risk_threshold_low_medium,risk_threshold_medium_high,training_rows,test_rows
+0.9080732700135685,0.9133313060435821,0.9087698412698412,0.9090990383473724,1.0,0.9036144578313253,0.9864253393665159,0.9156626506024096,0.9176553496662936,0.9131313131313131,0.9151741293532338,OVERFITTING DETECTED,1.230000000000004,3.25,663,166

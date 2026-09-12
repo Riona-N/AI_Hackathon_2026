@@ -41,6 +41,7 @@ from src.models.predict import build_prediction_output
 from src.explainability.feature_ranking import rank_features
 from src.explainability.shap_analysis import compute_shap_values
 from src.spatial.hotspot_classifier import classify_risk
+from src.classification.smote_classifier import run_smote_classification
 from src.spatial.mapping import make_hotspot_map
 from src.temporal.time_grouping import add_time_groups
 from src.temporal.trend_tracking import classify_hotspot_evolution
@@ -78,7 +79,38 @@ def main() -> None:
         f"site/date rows -> {len(y)} rows with a usable target.\n"
     )
 
-    section("2. MODEL COMPARISON (CV)")
+    # ------------------------------------------------------------------
+    # Evaluator-required classification branch: SMOTE
+    # ------------------------------------------------------------------
+    section("2. CLASSIFICATION: SMOTE + RISK PREDICTION")
+    report_lines.append(
+    "- Classification procedure: Data preprocessing -> Data leakage checks -> "
+    "Train/test split -> 10-fold cross-validation -> SMOTE on training data only -> "
+    "Initial model training -> Overfitting/underfitting detection -> "
+    "Correction and retraining -> Final test evaluation.\n"
+    )
+    classification_result = run_smote_classification(X, y)
+
+    classification_metrics = classification_result["metrics"]
+
+    report_lines.append(
+        f"- SMOTE classification final accuracy: "
+        f"{classification_metrics['final_test_accuracy'] * 100:.2f}%\n"
+    )
+    report_lines.append(
+        f"- SMOTE classification precision: "
+        f"{classification_metrics['final_test_precision']:.4f}\n"
+    )
+    report_lines.append(
+        f"- SMOTE classification recall: "
+        f"{classification_metrics['final_test_recall']:.4f}\n"
+    )
+    report_lines.append(
+        f"- SMOTE classification F1: "
+        f"{classification_metrics['final_test_f1']:.4f}\n"
+    )
+
+    section("3. MODEL COMPARISON (CV)")
     cv_results_df, cv_note = cross_validate_models(X, y)
     print(cv_note)
     print(cv_results_df.to_string(index=False))
