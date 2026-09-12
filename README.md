@@ -28,6 +28,8 @@ The classification branch follows the required machine-learning workflow:
 **Data preprocessing -> Data leakage checks -> Train/test split -> 10-fold cross-validation -> SMOTE on training data only -> Initial model training -> Overfitting/underfitting detection -> Model correction and retraining -> Final test evaluation**
 
 ---
+## Run Command
+python run_pipeline.py
 
 ## Dataset
 
@@ -35,3 +37,5 @@ The pipeline works with the water-quality CSV dataset:
 
 ```text
 data/raw/water_quality.csv
+
+
