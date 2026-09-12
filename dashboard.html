@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Quality AI - Results Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #ffffff;
+            color: #222;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            margin-top: 35px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f2f2f2;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .note {
+            background: #f7f7f7;
+            padding: 12px;
+            border-left: 4px solid #888;
+        }
+
+        a {
+            color: #0645ad;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>AI-Based Urban Water Quality Prediction and Pollution Hotspot Mapping
+</h1>
+    <p>
+        Clean And Green Technology 
+    </p>
+
+
+    <!-- DATASET -->
+    <div class="section">
+        <h2>1. Dataset Summary</h2>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Raw water quality readings</td>
+                <td>29,997</td>
+            </tr>
+            <tr>
+                <td>Original columns</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <td>Site/date records after preprocessing</td>
+                <td>861</td>
+            </tr>
+            <tr>
+                <td>Records with usable RPI target</td>
+                <td>829</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- CLASSIFICATION -->
+    <div class="section">
+        <h2>2. Risk Classification</h2>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>Method</td>
+                <td>Random Forest Classifier + SMOTE</td>
+            </tr>
+            <tr>
+                <td>Training records</td>
+                <td>663</td>
+            </tr>
+            <tr>
+                <td>Test records</td>
+                <td>166</td>
+            </tr>
+            <tr>
+                <td>10-fold CV Accuracy</td>
+                <td>90.81%</td>
+            </tr>
+            <tr>
+                <td>Final Test Accuracy</td>
+                <td>91.57%</td>
+            </tr>
+            <tr>
+                <td>Final Precision</td>
+                <td>91.77%</td>
+            </tr>
+            <tr>
+                <td>Final Recall</td>
+                <td>91.31%</td>
+            </tr>
+            <tr>
+                <td>Final F1 Score</td>
+                <td>91.52%</td>
+            </tr>
+        </table>
+
+        <div class="note">
+            SMOTE was applied only to the training data inside the
+            cross-validation training folds to avoid data leakage.
+        </div>
+    </div>
+
+
+    <!-- OVERFITTING -->
+    <div class="section">
+        <h2>3. Overfitting Detection and Correction</h2>
+
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Training Accuracy</th>
+                <th>Test Accuracy</th>
+            </tr>
+            <tr>
+                <td>Initial Model</td>
+                <td>100.00%</td>
+                <td>90.36%</td>
+            </tr>
+            <tr>
+                <td>Corrected Model</td>
+                <td>98.64%</td>
+                <td>91.57%</td>
+            </tr>
+        </table>
+
+        <p>
+            Initial model showed overfitting because the training accuracy
+            was 100% while test accuracy was lower.
+        </p>
+
+        <p>
+            The model was corrected using a restricted Random Forest
+            configuration and retrained.
+        </p>
+    </div>
+
+
+    <!-- SMOTE -->
+    <div class="section">
+        <h2>4. SMOTE and Risk Thresholds</h2>
+
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>SMOTE</td>
+                <td>Applied to training data only</td>
+            </tr>
+            <tr>
+                <td>Low / Medium threshold</td>
+                <td>1.23</td>
+            </tr>
+            <tr>
+                <td>Medium / High threshold</td>
+                <td>3.25</td>
+            </tr>
+            <tr>
+                <td>Risk classes</td>
+                <td>LOW, MEDIUM, HIGH</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- REGRESSION -->
+    <div class="section">
+        <h2>5. RPI Regression</h2>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>Selected model</td>
+                <td>Gradient Boosting</td>
+            </tr>
+            <tr>
+                <td>10-fold CV R²</td>
+                <td>0.97574 (97.57%)</td>
+            </tr>
+            <tr>
+                <td>Holdout R²</td>
+                <td>0.97215 (97.21%)</td>
+            </tr>
+            <tr>
+                <td>Holdout RMSE</td>
+                <td>0.27686</td>
+            </tr>
+            <tr>
+                <td>Holdout MAE</td>
+                <td>0.17813</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- MODEL COMPARISON -->
+    <div class="section">
+        <h2>6. Regression Model Comparison</h2>
+
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>R²</th>
+                <th>RMSE</th>
+                <th>MAE</th>
+            </tr>
+
+            <tr>
+                <td>Gradient Boosting</td>
+                <td>0.97574</td>
+                <td>0.25777</td>
+                <td>0.16313</td>
+            </tr>
+
+            <tr>
+                <td>Random Forest</td>
+                <td>0.96117</td>
+                <td>0.32674</td>
+                <td>0.18339</td>
+            </tr>
+
+            <tr>
+                <td>Linear Regression</td>
+                <td>0.32232</td>
+                <td>1.22037</td>
+                <td>0.74685</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- EXPLAINABILITY -->
+    <div class="section">
+        <h2>7. Explainability</h2>
+
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>SHAP TreeExplainer</td>
+                <td>Successfully generated</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- ANOMALY -->
+    <div class="section">
+        <h2>8. Anomaly Detection</h2>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Total records evaluated</td>
+                <td>829</td>
+            </tr>
+            <tr>
+                <td>Flagged anomalies</td>
+                <td>53</td>
+            </tr>
+            <tr>
+                <td>Anomaly rate</td>
+                <td>6.39%</td>
+            </tr>
+            <tr>
+                <td>Detection method</td>
+                <td>Residual standard deviation</td>
+            </tr>
+            <tr>
+                <td>Threshold</td>
+                <td>2 × standard deviation</td>
+            </tr>
+            <tr>
+                <td>Threshold value</td>
+                <td>0.4044</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- SPATIAL ANALYSIS -->
+    <div class="section">
+        <h2>9. Spatial Analysis</h2>
+
+        <p>
+            Spatial hotspot analysis is provided separately.
+        </p>
+
+        <p>
+            <a href="outputs/hotspot_map.html" target="_blank">
+                Open Hotspot Map
+            </a>
+        </p>
+    </div>
+
+
+    <!-- OUTPUTS -->
+    <div class="section">
+        <h2>10. Generated Outputs</h2>
+
+        <table>
+            <tr>
+                <th>Output</th>
+                <th>Description</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/final_report.md" target="_blank">
+                        final_report.md
+                    </a>
+                </td>
+                <td>Complete pipeline run report</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/classification_metrics.csv" target="_blank">
+                        classification_metrics.csv
+                    </a>
+                </td>
+                <td>Classification evaluation metrics</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/predictions.csv" target="_blank">
+                        predictions.csv
+                    </a>
+                </td>
+                <td>Model predictions</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/feature_importance.csv" target="_blank">
+                        feature_importance.csv
+                    </a>
+                </td>
+                <td>Feature importance results</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/anomaly_report.csv" target="_blank">
+                        anomaly_report.csv
+                    </a>
+                </td>
+                <td>Anomaly detection results</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/anomaly_stability.csv" target="_blank">
+                        anomaly_stability.csv
+                    </a>
+                </td>
+                <td>Anomaly stability analysis</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="outputs/hotspot_evolution.csv" target="_blank">
+                        hotspot_evolution.csv
+                    </a>
+                </td>
+                <td>Spatial hotspot evolution data</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
