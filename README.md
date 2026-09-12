@@ -20,12 +20,12 @@ The system processes water-quality measurements and generates a River Pollution 
 
 The framework provides two machine-learning tasks:
 
-1. **Regression** — predicts the continuous River Pollution Index.
-2. **Classification** — classifies observations into LOW, MEDIUM, or HIGH pollution-risk levels.
+1. **Regression** - predicts the continuous River Pollution Index.
+2. **Classification** - classifies observations into LOW, MEDIUM, or HIGH pollution-risk levels.
 
 The classification branch follows the required machine-learning workflow:
 
-**Data preprocessing → Data leakage checks → Train/test split → 10-fold cross-validation → SMOTE on training data only → Initial model training → Overfitting/underfitting detection → Model correction and retraining → Final test evaluation**
+**Data preprocessing -> Data leakage checks -> Train/test split -> 10-fold cross-validation -> SMOTE on training data only -> Initial model training -> Overfitting/underfitting detection -> Model correction and retraining -> Final test evaluation**
 
 ---
 
